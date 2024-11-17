@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuenta Regresiva para Navidad</title>
+    <!-- Enlace a la fuente QuickSand desde Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: 'Quicksand', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background-image: url('https://cdn.pixabay.com/video/2023/12/03/191856-891315505_tiny.jpg'); /* Imagen de fondo */
+            background-size: cover;
+            background-position: center;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: #FFD700; /* Color dorado */
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Sombra de texto */
+        }
+
+        .countdown {
+            font-size: 2rem;
+            margin-top: 20px;
+            color: #FFD700; /* Color dorado */
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Sombra de texto */
+        }
+
+        .countdown span {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div>
+        <h1>Cuenta Regresiva para Navidad</h1>
+        <div class="countdown" id="countdown"></div>
+    </div>
+
+    <script>
+        // Fecha de Navidad
+        const christmasDate = new Date("December 24, 2024 00:00:00").getTime();
+
+        // Actualiza el contador cada segundo
+        const interval = setInterval(function() {
+            const now = new Date().getTime();
+            const timeLeft = christmasDate - now;
+
+            if (timeLeft <= 0) {
+                clearInterval(interval);
+                document.getElementById('countdown').innerHTML = "¡Feliz Navidad!";
+            } else {
+                const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+                document.getElementById('countdown').innerHTML =
+                    `<span>${days}</span> días, <span>${hours}</span> horas, <span>${minutes}</span> minutos, <span>${seconds}</span> segundos`;
+            }
+        }, 1000);
+    </script>
+
+</body>
+</html>
