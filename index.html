@@ -22,6 +22,7 @@
             align-items: center;
             text-align: center;
             overflow: hidden;
+            flex-direction: column; /* Añadido para apilar elementos */
         }
 
         h1 {
@@ -40,6 +41,15 @@
         .countdown span {
             font-weight: bold;
         }
+
+        /* Estilos para el mensaje de créditos */
+        .credits {
+            margin-top: auto; /* Empuja el texto hacia la parte inferior */
+            font-size: 1.2rem;
+            color: #FFD700; /* Color dorado */
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Sombra de texto */
+            padding: 10px;
+        }
     </style>
 </head>
 <body>
@@ -47,6 +57,11 @@
     <div>
         <h1>Cuenta Regresiva para Navidad</h1>
         <div class="countdown" id="countdown"></div>
+    </div>
+
+    <!-- Mensaje de créditos -->
+    <div class="credits">
+        Hecho con ❤️ por xMarcos192
     </div>
 
     <script>
