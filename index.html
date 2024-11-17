@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuenta Regresiva para Navidad</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: 'Quicksand', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background-image: url('https://cdn.pixabay.com/video/2023/12/03/191856-891315505_tiny.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .content {
+            z-index: 1; /* Asegura que el contenido esté por encima del iframe */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%; /* Para asegurarse de que el contenido esté centrado */
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: #FFD700;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+        }
+
+        .countdown {
+            font-size: 2rem;
+            margin-top: 20px;
+            color: #FFD700;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+        }
+
+        .countdown span {
+            font-weight: bold;
+        }
+
+        .credits {
+            margin-top: auto;
+            font-size: 1.2rem;
+            color: #FFD700;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+            padding: 10px;
+        }
+
+        /* Estilos del botón mute */
+        .mute-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #FFD700;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            border-radius: 50%;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease;
+        }
+
+        .mute-btn:hover {
+            background-color: #FFCC00;
+        }
+
+        .mute-btn:focus {
+            outline: none;
+        }
+
+        /* Ocultar controles del reproductor de audio */
+        audio {
+            display: none;
+        }
+
+        /* Luces de Navidad */
+        .light {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.7;
+            animation: moveLights 10s linear infinite;
+        }
+
+        @keyframes moveLights {
+            0% {
+                transform: translate(0, 0);
+            }
+            50% {
+                transform: translate(200px, 100px);
+            }
+            100% {
+                transform: translate(0, 0);
+            }
+        }
+
+        /* Animación de Papá Noel con renos */
+        @keyframes santaMovement {
+            0% {
+                left: -300px;
+            }
+            100% {
+                left: 100%;
+            }
+        }
+
+        .santa {
+            position: absolute;
+            top: 10%;
+            width: 300px;
+            animation: santaMovement 30s linear infinite;
+        }
+
+        /* Animación de regalos cayendo */
+        @keyframes giftFall {
+            0% {
+                top: -100px;
+                opacity: 1;
+            }
+            100% {
+                top: 80%;
+                opacity: 0;
+            }
+        }
+
+        .gift {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-image: url('https://static.vecteezy.com/system/resources/previews/012/039/167/non_2x/watercolor-christmas-gifts-png.png');
+            background-size: cover;
+            animation: giftFall 4s linear infinite;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="content">
+        <h1>Cuenta Regresiva para Navidad</h1>
+        <div class="countdown" id="countdown"></div>
+    </div>
+
+    <div class="credits">
+        Hecho con ❤️ por xMarcos192
+    </div>
+
+    <!-- Reproductor de audio (sin controles y autoplay) -->
+    <audio id="audioPlayer" autoplay loop muted>
+        <source src="navidad.mp3" type="audio/mp3">
+        Tu navegador no soporta este formato de audio.
+    </audio>
+
+    <!-- Botón mute -->
+    <button class="mute-btn" onclick="toggleMute()">🔇</button>
+
+    <!-- Imagen de Papá Noel con renos -->
+    <img class="santa" src="https://png.pngtree.com/png-clipart/20221115/original/pngtree-black-silhouette-of-santa-claus-sleigh-picture-image_6959578.png" alt="Papá Noel con renos">
+
+    <script>
+        // Fecha de Navidad
+        const christmasDate = new Date("December 24, 2024 00:00:00").getTime();
+
+        // Actualiza el contador cada segundo
+        const interval = setInterval(function() {
+            const now = new Date().getTime();
+            const timeLeft = christmasDate - now;
+
+            if (timeLeft <= 0) {
+                clearInterval(interval);
+                document.getElementById('countdown').innerHTML = "¡Feliz Navidad!";
+            } else {
+                const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+                document.getElementById('countdown').innerHTML =
+                    `<span>${days}</span> días, <span>${hours}</span> horas, <span>${minutes}</span> minutos, <span>${seconds}</span> segundos`;
+            }
+        }, 1000);
+
+        // Función para silenciar o activar el sonido
+        function toggleMute() {
+            const audioPlayer = document.getElementById("audioPlayer");
+            if (audioPlayer.muted) {
+                audioPlayer.muted = false;
+                document.querySelector(".mute-btn").textContent = "🔊";  // Mostrar icono de volumen
+            } else {
+                audioPlayer.muted = true;
+                document.querySelector(".mute-btn").textContent = "🔇";  // Mostrar icono de silencio
+            }
+        }
+
+        // Crear luces de Navidad
+        const colors = ['#FF0000', '#00FF00', '#FFD700', '#00BFFF', '#FF6347']; // Colores de las luces
+        for (let i = 0; i < 20; i++) {
+            createLight();
+        }
+
+        function createLight() {
+            const light = document.createElement('div');
+            light.classList.add('light');
+            light.style.width = `${Math.random() * 15 + 10}px`; // Tamaño aleatorio
+            light.style.height = light.style.width; // Mantener forma circular
+            light.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)]; // Color aleatorio
+            light.style.top = `${Math.random() * window.innerHeight}px`; // Posición aleatoria en Y
+            light.style.left = `${Math.random() * window.innerWidth}px`; // Posición aleatoria en X
+            light.style.animationDuration = `${Math.random() * 5 + 5}s`; // Duración de la animación
+            light.style.animationTimingFunction = 'ease-in-out';
+            document.body.appendChild(light);
+        }
+
+        // Crear regalos cayendo
+        setInterval(createFallingGifts, 30000);  // Crear un regalo cada 30 segundos
+
+        function createFallingGifts() {
+            const gift = document.createElement('div');
+            gift.classList.add('gift');
+            gift.style.left = `${Math.random() * 100}%`; // Posición aleatoria en X
+            document.body.appendChild(gift);
+        }
+    </script>
+
+</body>
+</html>
